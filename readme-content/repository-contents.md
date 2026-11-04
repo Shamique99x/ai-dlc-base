@@ -87,6 +87,7 @@ The onboarding agent first asks where your process documentation lives, then ins
         bug-bolt.md
         hotfix-bolt.md
         nfr-bolt.md
+        custom/                 ← project extensions: skills only this project needs
       guidelines/
         domain-glossary.md
         edge-cases.md

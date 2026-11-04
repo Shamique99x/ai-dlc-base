@@ -44,6 +44,7 @@ For each improvement, determine whether it is **generic** (beneficial to all AI-
 
 | Target file type | Classification |
 |---|---|
+| Any file in `skills/custom/` (project extensions) | Project-specific — owned by this project, with no counterpart in the base repo. Check this row before the skills row below |
 | Any file in `process-onboarding-agent/skills/` | Generic — skills are copied verbatim into every project |
 | Any `_template.md` file in `process-onboarding-agent/ops/` | Generic — templates are shared across all projects |
 | `process-onboarding-agent/rules/engagement.md` | Generic — copied verbatim into every project |
@@ -68,11 +69,19 @@ Ask: *If this improvement were applied to a completely different project — dif
 - Yes, the process or ceremony would be better regardless of context → **Generic**
 - No, it relies on knowledge of this project's domain, stack, or specific patterns → **Project-specific**
 
+A project extension is classified project-specific without the content test, unless the engineer says it would help other projects. In that case, apply the content test; if it passes, promote the extension as a new skill (Step 4).
+
 ---
 
 ## Step 3 — Handle Project-Specific Improvements
 
 If the improvement is project-specific:
+
+**If it was applied by editing a built-in file** — a skill, an ops template, or `rules/engagement.md` copied verbatim from the base repo — propose moving it into a project extension before recording:
+
+> "[Improvement title] only applies to this project, but it was applied inside `[built-in file]`. I suggest moving it to `skills/custom/[name].md`, adding its routing line under **Project extensions** in the master rule file Section 6, and returning `[built-in file]` to its base version. Shall I make that move?"
+
+Wait for the engineer's response. If they agree, make the move. If they decline, leave the edit in place and add "kept in built-in file at engineer's request" to the reason recorded below.
 
 Update the `Knowledge Promotion` field in the improvement file to:
 
@@ -101,6 +110,7 @@ If the improvement is generic, determine the corresponding file in the base repo
 | `process-onboarding-agent/setup-guide.md` | `process-onboarding-agent/setup-guide.md` |
 | `process-onboarding-agent/onboard.md` | `process-onboarding-agent/onboard.md` |
 | New skill or guideline file | New file at the same relative path |
+| `skills/custom/[name].md` (an extension that passed the content test) | New file at `process-onboarding-agent/skills/[name].md` — a new skill; remove project-specific detail from the draft |
 
 Draft the exact change needed in the base repo. Be precise — draft the exact text to replace and the exact replacement, the same format used in the improvement file itself:
 

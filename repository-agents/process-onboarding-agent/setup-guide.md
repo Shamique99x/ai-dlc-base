@@ -477,6 +477,7 @@ Create this directory tree at the root of your repository:
     nfr-bolt.md               ← non-functional quality attribute bolt (performance, security, accessibility)
     product-engineering-essentials.md  ← optional ten-pillar checklist of product/engineering foundations
     release-readiness-checklist.md     ← engineer-invoked, self-attestation UAT/production release checklist
+    custom/                  ← project-owned skills (project extensions); created empty, never filled from the base repo
   guidelines/
     domain-glossary.md       ← canonical business terms used in code and prompts
     edge-cases.md            ← known failure modes to check before generating code
@@ -644,6 +645,10 @@ If the engineer defers, ask for the new date and update Section 9 before continu
 **Hotfix bolt:** read `{FRAMEWORK_ROOT}/skills/hotfix-bolt.md` when the engineer says "hotfix", "production issue", "prod is down", or "emergency fix for X". Skip elaboration — begin hotfix intake immediately.
 **NFR bolt:** read `{FRAMEWORK_ROOT}/skills/nfr-bolt.md` when the engineer says "improve performance", "harden security", "accessibility improvements", "NFR bolt for X", or "non-functional work on X". Do not create a new intent — follow the NFR bolt workflow.
 **Engagement monitoring:** read and apply `{FRAMEWORK_ROOT}/rules/engagement.md` throughout all ceremonies.
+
+**Project extensions:** skills this project owns live in `{FRAMEWORK_ROOT}/skills/custom/`. Each has one routing line below, in the same form as the built-in lines above. An extension runs in addition to the built-in skills: when both apply to the same moment, run the built-in skill first, then the extension. An extension's routing line may replace one named step of a built-in skill ("instead of step N of `uat.md`, …"), but no extension may remove the Prompt Quality Gate, an engineer sign-off, the bolt risk assessment, the circuit breaker, or UAT.
+When the engineer asks to add a project-specific step, rule, or ceremony: (1) propose it as a new file in `{FRAMEWORK_ROOT}/skills/custom/` — never edit a built-in skill, an ops template, or `rules/engagement.md` for a need that only this project has; (2) give the file a **Purpose**, a **Trigger**, and numbered steps, like the built-in skills; (3) confirm the trigger with the engineer; (4) save the file and add its routing line under this heading.
+_No project extensions yet._
 ```
 
 ### Section 7 — Review Behavior
@@ -1018,7 +1023,7 @@ The knowledge-promotion skill evaluates each applied improvement to determine wh
 
 Runs automatically as Step 5 of the Post-Retro Improvement Workflow after all improvements are applied. Can also be invoked directly against a specific improvement. A retro is not fully closed until every Applied improvement has a Knowledge Promotion status recorded.
 
-The skill uses the target file as the primary classification signal — files copied verbatim from the base repo (skills, templates, `engagement.md`) are classified generic; files generated per project (code-standards, architecture, domain-glossary, etc.) are classified project-specific. Ambiguous cases are resolved using a content test: would this improvement still apply to a project with a completely different tech stack and domain?
+The skill uses the target file as the primary classification signal — files copied verbatim from the base repo (skills, templates, `engagement.md`) are classified generic; files generated per project (code-standards, architecture, domain-glossary, etc.) and project extensions in `skills/custom/` are classified project-specific. A project-only change made inside a verbatim-copied file is offered a move into `skills/custom/`, so built-in files stay identical to the base repo. Ambiguous cases are resolved using a content test: would this improvement still apply to a project with a completely different tech stack and domain?
 
 Copy this file verbatim from `process-onboarding-agent/skills/knowledge-promotion.md` to `{FRAMEWORK_ROOT}/skills/knowledge-promotion.md`. No customization is needed.
 
@@ -1121,6 +1126,24 @@ Copy this file verbatim from `process-onboarding-agent/skills/nfr-bolt.md` to `{
 ```markdown
 **NFR bolt:** read `{FRAMEWORK_ROOT}/skills/nfr-bolt.md` when the engineer says "improve performance", "harden security", "accessibility improvements", "NFR bolt for X", or "non-functional work on X". Do not create a new intent — follow the NFR bolt workflow.
 ```
+
+---
+
+### `skills/custom/` — project extensions
+
+Holds skills that only this project needs — for example a compliance sign-off before release, a client demo ceremony, or an extra review step for a regulated module. Create the folder empty during onboarding, with a `.gitkeep` so it is committed. Nothing from the base repo is ever copied into it, so its files are never overwritten by, or merged with, a newer version of the framework.
+
+Rules for this folder:
+
+- **Built-in files stay untouched.** Skills, ops templates, and `rules/engagement.md` are copied verbatim from the base repo. Do not edit them for a need that only this project has; put the addition in `skills/custom/` and route to it. Built-in files that match the base repo keep knowledge promotion accurate (a change to them means a change for every project) and let a later refresh from the base repo replace them without a hand merge.
+- **Same shape as built-in skills.** Each file states its **Purpose**, its **Trigger**, and numbered steps. Name files in `kebab-case.md` after the capability, not the ticket or author.
+- **One routing line per file**, under **Project extensions** in the master rule file Section 6. The AI only runs an extension it can find there.
+- **Extend, or replace one named step — never remove a gate.** An extension runs after the built-in skill that shares its moment. Its routing line may replace one named step of a built-in skill by saying so. No extension may remove the Prompt Quality Gate, an engineer sign-off, the bolt risk assessment, the circuit breaker, or UAT.
+- **Project-specific by default.** The knowledge-promotion skill classifies changes in this folder as project-specific. If the engineer believes an extension would help any project, it is promoted to the base repo as a new skill.
+
+If the structured interview or codebase archaeology surfaced a team practice that no built-in skill covers (e.g. a mandatory security review for a payments module), offer to capture it as the first project extension before completing onboarding. Do not create one without the engineer's go-ahead.
+
+**Section 6 routing:** the **Project extensions** block is already part of the Section 6 template in Step 2 — do not add a second one. Verify it is present, and add one routing line for each extension created during onboarding.
 
 ---
 
@@ -1356,6 +1379,7 @@ This is the final and mandatory step. After the report is presented, the agent m
 - [ ] Master rule file written with all 11 sections (Step 2)
 - [ ] `rules/` files written (prompt-quality-gate, code-standards, security, architecture)
 - [ ] `skills/` files written (mob-elab-prompts, review-checklist)
+- [ ] `skills/custom/` folder created (empty, with `.gitkeep`) and the **Project extensions** block present in Section 6
 - [ ] `guidelines/` files written (domain-glossary, edge-cases, acceptance-patterns, dev-setup)
 - [ ] Ops templates written (intent, unit, bolt, retro, incident, improvement, codebase-findings)
 - [ ] `Instructions2FDE.md` written

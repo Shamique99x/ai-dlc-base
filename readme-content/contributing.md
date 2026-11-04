@@ -32,6 +32,7 @@ For each improvement, the skill classifies it as:
 
 | Target file type | Default classification |
 |---|---|
+| `skills/custom/*.md` (project extensions) | Project-specific — owned by the project, no base repo counterpart; promoted as a new skill only if the engineer says it helps other projects and it passes the content test |
 | `process-onboarding-agent/skills/*.md` | Generic — skills are copied verbatim into every project |
 | `process-onboarding-agent/ops/**/_template.md` | Generic — templates are shared across all projects |
 | `process-onboarding-agent/rules/engagement.md` | Generic — copied verbatim into every project |
